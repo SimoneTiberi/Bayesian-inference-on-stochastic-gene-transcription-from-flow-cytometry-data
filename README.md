@@ -8,3 +8,5 @@ The material is organized in three folders:
 -"Experimental data" has the experimental data for both conditions and the measurement error prior;
 
 -"R code" reports the R code used for the main analysis and to reproduce plots and figures.
+
+Contact: simone.tiberi@uzh.ch
