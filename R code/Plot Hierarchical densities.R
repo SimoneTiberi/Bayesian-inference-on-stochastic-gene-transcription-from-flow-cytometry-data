@@ -268,8 +268,6 @@ for(i in 1:7){
     mu_P = k_1/{k_0 + k_1}
     x_4 = a_0 * (1-mu_P) / (a_1 * mu_P + a_0 * (1-mu_P) )
     
-    print(round( c(mean(x_1), mean(x_2), mean(x_3), mean(x_4) ), 2))
-    
     lines(density( x_1,  n = 10^2, adjust = 1), col = cols[i], lty = i, lwd = 2 )
     lines(density( x_2,  n = 10^2, adjust = 1), col = cols[i], lty = i, lwd = 2 )
     lines(density( x_3,  n = 10^2, adjust = 1), col = cols[i], lty = i, lwd = 2 )
