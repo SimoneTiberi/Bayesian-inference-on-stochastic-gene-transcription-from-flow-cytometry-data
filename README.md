@@ -3,7 +3,7 @@ The page containts the R code and the exprimental data used for the analyses pre
 
 The material is organized in three folders:
 
--"Background data" contains the raw background data and R code used to obtain a prior for the measurement error;
+-"Background error data" contains the raw background data and R code used to obtain a prior for the measurement error;
 
 -"Experimental data" has the experimental data for both conditions and the measurement error prior;
 
