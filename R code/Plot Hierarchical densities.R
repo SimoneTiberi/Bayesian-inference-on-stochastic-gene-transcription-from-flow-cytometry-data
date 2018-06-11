@@ -38,6 +38,13 @@ for(k in 1:K){
   SD_Y[2,k] = mean(Y[[k]])
 }
 
+# load the experimental data for the two experimental condition
+load("Data Tet5.RData") # Data for cells stimulated with 5 ng/ML of tetracycline.
+Y_5 = Y
+
+load("Data Tet10.RData") # Data for cells stimulated with 10 ng/ML of tetracycline.
+Y_10 = Y
+
 ################################################################################################################
 # Posterior densities for the hierarchical parameters:
 ################################################################################################################
@@ -522,3 +529,143 @@ for(k in 1:2){
   abline(h = SD_Y[k,4], col = "green", lwd = 2)
 }
 
+################################################################################################################
+# Simulate the observed data (Y) from 100 posterior values and compare its densities against the experimental data
+################################################################################################################
+J = 10^2 # number of simulated densities
+
+par(mfrow = c(4,2))
+for(i in 1:2){ # WT tet 5 for 1 and WT 2 for 2
+  
+  # replicate 1:
+  plot(NULL, 
+       main = expression(Y^{(1)}),
+       xlim = c(0,1.5*10^4), ylim = c(0, 0.0007),  
+       xlab = "", ylab = "", cex.main = 1.5, cex.axis = 1.5, cex.lab = 1)
+  
+  a_0 = exp(hierarchical_1[[i]][seq(1, 5000, 50),1]);  
+  a_1 = exp(hierarchical_1[[i]][seq(1, 5000, 50),2])
+  kON = exp(hierarchical_1[[i]][seq(1, 5000, 50),3]); 
+  kOFF = exp(hierarchical_1[[i]][seq(1, 5000, 50),4])
+  kappa = exp(hierarchical_1[[i]][seq(1, 5000, 50),5])
+  mu_epsilon = exp(hierarchical_1[[i]][seq(1, 5000, 50),6])
+  sigma_epsilon = exp(hierarchical_1[[i]][seq(1, 5000, 50),7])
+  
+  # simulate J times n values (10^3) and plot its density.
+  for(j in 1:J){
+    n = 10^3 # data points
+    P = rbeta(n, kON[j], kOFF[j])
+    X = rpois(n, P*a_1[j] + (1-P) * a_0[j] )
+    
+    error = rnorm(n, mu_epsilon[j], sigma_epsilon[j])
+    
+    Z = kappa[j] *  X + error
+    
+    lines(density(Z, n = 10^2, adjust = 2), col = 3, lty = 1, lwd = 2 )
+  }
+  
+  if(i ==1){
+    lines(density(Y_5[[1]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }else{
+    lines(density(Y_10[[1]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }
+  
+  # replicate 2:
+  plot(NULL, 
+       main = expression(Y^{(2)}),
+       #main = expression(e^{mu[1]}),
+       xlim = c(0,1.5*10^4), ylim = c(0, 0.0007),  
+       xlab = "", ylab = "", cex.main = 1.5, cex.axis = 1.5, cex.lab = 1)
+  
+  a_0 = exp(hierarchical_2[[i]][seq(1, 5000, 50),1]);  
+  a_1 = exp(hierarchical_2[[i]][seq(1, 5000, 50),2])
+  kON = exp(hierarchical_2[[i]][seq(1, 5000, 50),3]); 
+  kOFF = exp(hierarchical_2[[i]][seq(1, 5000, 50),4])
+  kappa = exp(hierarchical_2[[i]][seq(1, 5000, 50),5])
+  mu_epsilon = exp(hierarchical_2[[i]][seq(1, 5000, 50),6])
+  sigma_epsilon = exp(hierarchical_2[[i]][seq(1, 5000, 50),7])
+  
+  # simulate J times n values (10^3) and plot its density.
+  for(j in 1:J){
+    n = 10^3 # data points
+    P = rbeta(n, kON[j], kOFF[j])
+    X = rpois(n, P*a_1[j] + (1-P) * a_0[j] )
+    
+    error = rnorm(n, mu_epsilon[j], sigma_epsilon[j])
+    
+    Z = kappa[j] *  X + error
+    
+    lines(density(Z, n = 10^2, adjust = 2), col = 3, lty = 1, lwd = 2 )
+  }
+  if(i ==1){
+    lines(density(Y_5[[2]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }else{
+    lines(density(Y_10[[2]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }  
+  
+  # replicate 3:
+  plot(NULL, 
+       main = expression(Y^{(3)}),
+       #main = expression(e^{mu[1]}),
+       xlim = c(0,1.5*10^4), ylim = c(0, 0.0007),  
+       xlab = "", ylab = "", cex.main = 1.5, cex.axis = 1.5, cex.lab = 1)
+  
+  a_0 = exp(hierarchical_3[[i]][seq(1, 5000, 50),1]);  
+  a_1 = exp(hierarchical_3[[i]][seq(1, 5000, 50),2])
+  kON = exp(hierarchical_3[[i]][seq(1, 5000, 50),3]); 
+  kOFF = exp(hierarchical_3[[i]][seq(1, 5000, 50),4])
+  kappa = exp(hierarchical_3[[i]][seq(1, 5000, 50),5])
+  mu_epsilon = exp(hierarchical_3[[i]][seq(1, 5000, 50),6])
+  sigma_epsilon = exp(hierarchical_3[[i]][seq(1, 5000, 50),7])
+  
+  # simulate J times n values (10^3) and plot its density.
+  for(j in 1:J){
+    n = 10^3 # data points
+    P = rbeta(n, kON[j], kOFF[j])
+    X = rpois(n, P*a_1[j] + (1-P) * a_0[j] )
+    
+    error = rnorm(n, mu_epsilon[j], sigma_epsilon[j])
+    
+    Z = kappa[j] *  X + error
+    
+    lines(density(Z, n = 10^2, adjust = 2), col = 3, lty = 1, lwd = 2 )
+  }
+  if(i ==1){
+    lines(density(Y_5[[3]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }else{
+    lines(density(Y_10[[3]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }  
+  
+  # replicate 4:
+  plot(NULL, 
+       main = expression(Y^{(4)}),
+       #main = expression(e^{mu[1]}),
+       xlim = c(0,1.5*10^4), ylim = c(0, 0.0007),  
+       xlab = "", ylab = "", cex.main = 1.5, cex.axis = 1.5, cex.lab = 1)
+  
+  a_0 = exp(hierarchical_4[[i]][seq(1, 5000, 50),1]);  
+  a_1 = exp(hierarchical_4[[i]][seq(1, 5000, 50),2])
+  kON = exp(hierarchical_4[[i]][seq(1, 5000, 50),3]); 
+  kOFF = exp(hierarchical_4[[i]][seq(1, 5000, 50),4])
+  kappa = exp(hierarchical_4[[i]][seq(1, 5000, 50),5])
+  mu_epsilon = exp(hierarchical_4[[i]][seq(1, 5000, 50),6])
+  sigma_epsilon = exp(hierarchical_4[[i]][seq(1, 5000, 50),7])
+  
+  # simulate J times n values (10^3) and plot its density.
+  for(j in 1:J){
+    n = 10^3 # data points
+    P = rbeta(n, kON[j], kOFF[j])
+    X = rpois(n, P*a_1[j] + (1-P) * a_0[j] )
+    
+    error = rnorm(n, mu_epsilon[j], sigma_epsilon[j])
+    
+    Z = kappa[j] *  X + error
+    
+    lines(density(Z, n = 10^2, adjust = 2), col = 3, lty = 1, lwd = 2 )
+  }
+  if(i ==1){
+    lines(density(Y_5[[4]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }else{
+    lines(density(Y_10[[4]],  n = 10^3, adjust = 2), col = 1, lty = 1, lwd = 2 )
+  }  
+}
