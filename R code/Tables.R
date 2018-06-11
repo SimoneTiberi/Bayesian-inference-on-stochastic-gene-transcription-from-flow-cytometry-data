@@ -231,6 +231,45 @@ for(i in (1:2)){
   CI_ratio[[i]][k, 3:4 ] = HPDinterval( mcmc( x_2 ) )
   CI_ratio[[i]][k, 5:6 ] = HPDinterval( mcmc( x_3 ) )
   CI_ratio[[i]][k, 7:8 ] = HPDinterval( mcmc( x_4 ) )
+  
+  # Var_X / mu_X (Variance of X / mean of X)
+  k = 7
+  a_0 = exp(hierarchical_1[[i]][,1]);  a_1 = exp(hierarchical_1[[i]][,2])
+  kON = exp(hierarchical_1[[i]][,3]); kOFF = exp(hierarchical_1[[i]][,4])
+  kappa = exp(hierarchical_1[[i]][,5])
+  mu_epsilon = exp(hierarchical_1[[i]][,6])
+  mu_X = (a_1 * kON + a_0 * kOFF)/(kON + kOFF)
+  var_X = mu_X + { ((a_1 - a_0)^2) * kON * kOFF}/{ ((kON + kOFF)^2) * (1 + kON + kOFF) }
+  x_1 = var_X/mu_X
+  
+  a_0 = exp(hierarchical_2[[i]][,1]);    a_1 = exp(hierarchical_2[[i]][,2])
+  kON = exp(hierarchical_2[[i]][,3]);    kOFF = exp(hierarchical_2[[i]][,4])
+  kappa = exp(hierarchical_2[[i]][,5]);  mu_epsilon = exp(hierarchical_2[[i]][,6])
+  mu_X = (a_1 * kON + a_0 * kOFF)/(kON + kOFF)
+  var_X = mu_X + { ((a_1 - a_0)^2) * kON * kOFF}/{ ((kON + kOFF)^2) * (1 + kON + kOFF) }
+  x_2 = var_X/mu_X
+  
+  a_0 = exp(hierarchical_3[[i]][,1]);  a_1 = exp(hierarchical_3[[i]][,2])
+  kON = exp(hierarchical_3[[i]][,3]); kOFF = exp(hierarchical_3[[i]][,4])
+  kappa = exp(hierarchical_3[[i]][,5])
+  mu_epsilon = exp(hierarchical_3[[i]][,6])
+  mu_X = (a_1 * kON + a_0 * kOFF)/(kON + kOFF)
+  var_X = mu_X + { ((a_1 - a_0)^2) * kON * kOFF}/{ ((kON + kOFF)^2) * (1 + kON + kOFF) }
+  x_3 = var_X/mu_X
+  
+  a_0 = exp(hierarchical_4[[i]][,1]);  a_1 = exp(hierarchical_4[[i]][,2])
+  kON = exp(hierarchical_4[[i]][,3]); kOFF = exp(hierarchical_4[[i]][,4])
+  kappa = exp(hierarchical_4[[i]][,5])
+  mu_epsilon = exp(hierarchical_4[[i]][,6])
+  mu_X = (a_1 * kON + a_0 * kOFF)/(kON + kOFF)
+  var_X = mu_X + { ((a_1 - a_0)^2) * kON * kOFF}/{ ((kON + kOFF)^2) * (1 + kON + kOFF) }
+  x_4 = var_X/mu_X
+  
+  CI_ratio[[i]][k, 1:2 ] = HPDinterval( mcmc( x_1 ) )
+  CI_ratio[[i]][k, 3:4 ] = HPDinterval( mcmc( x_2 ) )
+  CI_ratio[[i]][k, 5:6 ] = HPDinterval( mcmc( x_3 ) )
+  CI_ratio[[i]][k, 7:8 ] = HPDinterval( mcmc( x_4 ) )
+}
 }
 
 library(xtable)
