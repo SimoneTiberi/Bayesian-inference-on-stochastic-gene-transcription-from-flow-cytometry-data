@@ -2,7 +2,9 @@
 The page containts the R code and the exprimental data used for the analyses presented in:
 
 Simone Tiberi, Mark Walsh, Massimo Cavallaro, Daniel Hebenstreit and Bärbel Finkenstädt.
+
 Bayesian inference on stochastic gene transcription from flow cytometry data, Bioinformatics (2018).
+
 Link to the manuscript: https://academic.oup.com/bioinformatics/article/34/17/i647/5093237
 
 The material is organized in three folders:
